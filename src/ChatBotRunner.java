@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 /**
  * A simple class to run our chatbot teams.
- * @author Brooklyn Tech CS Department
+ * @author Ricky Chu, Wei Chen, Loris Jautakas
  * @version September 2018
  */
 public class ChatBotRunner
@@ -13,12 +13,13 @@ public class ChatBotRunner
 	 */
 	public static void main(String[] args)
 	{
-		ChatBot1 chatbot1 = new ChatBot1();
-		BotBob chatbotBob = new BotBob();
-		SifiBot sifiBot = new SifiBot();
-		
+		MysteryBot chatbot1 = new MysteryBot();
+        BotBob chatbotBob = new BotBob();
+        SifiBot sifiBot = new SifiBot();
 
-		Scanner in = new Scanner (System.in);
+
+
+        Scanner in = new Scanner (System.in);
 		System.out.println("Welcome to the chatbot, nice to meet you.");
 		String statement = in.nextLine();
 
