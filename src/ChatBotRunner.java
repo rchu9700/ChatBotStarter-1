@@ -12,30 +12,49 @@ public class ChatBotRunner {
 	 */
 	public static void main(String[] args)
 	{
+		String[] positiveResponses = {" Yes ", " Yeah ", ""};
+		String[] Letters = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w,", "x", "y", "z" };
 		MysteryBot mysteryBot = new MysteryBot();
         BotBob chatbotBob = new BotBob();
         SciFiBot sciFiBot = new SciFiBot();
 
-
-
         Scanner in = new Scanner (System.in);
-		System.out.println("Welcome to the chatbot, nice to meet you.");
-		String statement = in.nextLine();
-
-
-		while (!statement.equals("Bye"))
+		String bot = "";
+        System.out.println("Welcome to the chatbot, nice to meet you.");
+		System.out.println("Would you like a mystery story?");
+		if (hasKeyWord(in.nextLine(), "Yes"))
 		{
-			//Use Logic to control which chatbot is handling the conversation\
-			//This example has only chatbot1
+			bot = "SciFi";
+		}
 
-
-
-			mysteryBot.chatLoop(statement);
-
-
-			statement = in.nextLine();
-
+		System.out.println("Would you like a fantasy story then?");
+		if (hasKeyWord(in.nextLine(), "Yes"))
+		{
 
 		}
+
+	}
+	private static boolean hasKeyWord (String input, String keyWord)
+	{
+		input = input.toLowerCase();
+		keyWord = keyWord.toLowerCase();
+		if (input.indexOf(keyWord) == -1)
+		{
+			return false;
+		}
+
+		return true;
+	}
+	private static String charBefore(String input, String keyWord)
+	{
+		input = input.toLowerCase();
+		keyWord = keyWord.toLowerCase();
+		return input.substring(input.indexOf(keyWord)-1,input.indexOf(keyWord));
+	}
+	private static String charAfter(String input, String keyWord)
+	{
+		input = input.toLowerCase();
+		keyWord = keyWord.toLowerCase();
+		return input.substring(input.indexOf(keyWord)+keyWord.length(),input.indexOf(keyWord)+keyWord.length()+1);
 	}
 }
