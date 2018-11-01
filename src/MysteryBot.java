@@ -40,7 +40,7 @@ public class MysteryBot
 	 */	
 	public String getGreeting()
 	{
-		return "Hi, what is up?";
+		return "Welcome to the mysterious story of who murdered Ms. Nathan! First off, what might be your name?";
 	}
 	
 	/**
@@ -57,6 +57,10 @@ public class MysteryBot
 		if (statement.length() == 0)
 		{
 			response = "Say something, please.";
+		}
+
+		else {
+			System.out.println("Why hello " + statement + "! Let me tell you a brief little story about a friend of mine that goes by the name Maria Nathan. She was only 18 years old and went to Stanford University. It wasn't long before my precious little baby was murdered and ")
 		}
 
 		else if (findKeyword(statement, "no") >= 0)
