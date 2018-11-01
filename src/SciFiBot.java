@@ -1,18 +1,16 @@
-// Loris Jautakas
 import java.util.Random;
 import java.util.Scanner;
 
 /**
  * A program to carry on conversations with a human user.
  * This version:
- * @author Brooklyn Tech CS Department
+ * @author Loris Jautakas
  * @version September 2018
  */
-public class SifiBot
+public class SciFiBot
 {
 	//emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
 	int emotion = 0;
-
 
 	/**
 	 * Runs the conversation for this particular chatbot, should allow switching to other chatbots.

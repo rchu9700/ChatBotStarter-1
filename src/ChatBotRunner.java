@@ -5,17 +5,16 @@ import java.util.Scanner;
  * @author Ricky Chu, Wei Chen, Loris Jautakas
  * @version September 2018
  */
-public class ChatBotRunner
-{
+public class ChatBotRunner {
 
 	/**
 	 * Create instances of each chatbot, give it user input, and print its replies. Switch chatbot responses based on which chatbot the user is speaking too.
 	 */
 	public static void main(String[] args)
 	{
-		MysteryBot chatbot1 = new MysteryBot();
+		MysteryBot mysteryBot = new MysteryBot();
         BotBob chatbotBob = new BotBob();
-        SifiBot sifiBot = new SifiBot();
+        SciFiBot sciFiBot = new SciFiBot();
 
 
 
@@ -31,7 +30,7 @@ public class ChatBotRunner
 
 
 
-			chatbot1.chatLoop(statement);
+			mysteryBot.chatLoop(statement);
 
 
 			statement = in.nextLine();
@@ -39,5 +38,4 @@ public class ChatBotRunner
 
 		}
 	}
-
 }

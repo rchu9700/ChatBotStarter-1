@@ -4,7 +4,7 @@ import java.util.Scanner;
 /**
  * A program to carry on conversations with a human user.
  * This version:
- * @author Brooklyn Tech CS Department
+ * @author Wei Chen
  * @version September 2018
  */
 public class BotBob
