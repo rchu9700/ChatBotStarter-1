@@ -41,7 +41,7 @@ public class BotBob
 	 */	
 	public String getGreeting()
 	{
-		return "Hi, what is up?";
+		return "Hi, I'm BobBot, your Spirit Guardian." + "/n" + "you have awaken in the world ruled by the demon lord, you must defeat the demon lord to return home!" +"/n" + "So, what is your divine name?";
 	}
 	
 	/**
