@@ -12,49 +12,118 @@ public class ChatBotRunner {
 	 */
 	public static void main(String[] args)
 	{
-		String[] positiveResponses = {" Yes ", " Yeah ", ""};
-		String[] Letters = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w,", "x", "y", "z" };
+		String[] positiveResponses = {"Yes", " Yeah ", ""};
+		String[] negativeResponses = {"No", "Nope", "No way", "Not a chance"};
 		MysteryBot mysteryBot = new MysteryBot();
         FantasyBot fantasyBot = new FantasyBot();
         SciFiBot sciFiBot = new SciFiBot();
 
         Scanner in = new Scanner (System.in);
 		String bot = "";
-        System.out.println("Welcome to the chatbot, nice to meet you.");
+        System.out.println("Welcome to the storyBot, nice to meet you.");
 		System.out.println("Would you like a mystery story?");
-		if (hasKeyWord(in.nextLine(), "Yes"))
+		String input = "";
+		Boolean agree = false;
+		while (bot.equals(""))
 		{
-			bot = "SciFi";
+			input = in.nextLine();
+			for (int i = 0; i < positiveResponses.length; i++)
+			{
+				if (positiveResponses[i].equals(input))
+				{
+					agree = true;
+				}
+			}
+			if (agree)
+			{
+				bot = "mystery";
+				break;
+			}
+			System.out.println("Would you like a fantasy story then?");
+			input = in.nextLine();
+			for (int i = 0; i < positiveResponses.length; i++)
+			{
+				if (positiveResponses[i].equals(input))
+				{
+					agree = true;
+				}
+			}
+			if (agree)
+			{
+				bot = "fantasy";
+				break;
+			}
+			//
+			System.out.println("Would you like a scifi story then?");
+			input = in.nextLine();
+			for (int i = 0; i < positiveResponses.length; i++)
+			{
+				if (positiveResponses[i].equals(input))
+				{
+					agree = true;
+				}
+			}
+			if (agree)
+			{
+				bot = "mystery";
+				break;
+			}
+		}
+		System.out.println("It worked");
+	}
+	private static boolean hasKeyWord (String statement, String goal)
+	{
+		statement = statement.toLowerCase();
+		if (findKeyword(statement,goal,0) != -1)
+		{
+			return true;
+		}
+		return false;
+	}
+	private static int findKeyword(String statement, String goal, int startPos)
+	{
+		String phrase = statement.trim().toLowerCase();
+		goal = goal.toLowerCase();
+
+		// The only change to incorporate the startPos is in
+		// the line below
+		int psn = phrase.indexOf(goal, startPos);
+
+		// Refinement--make sure the goal isn't part of a
+		// word
+		while (psn >= 0)
+		{
+			// Find the string of length 1 before and after
+			// the word
+			String before = " ", after = " ";
+			if (psn > 0)
+			{
+				before = phrase.substring(psn - 1, psn);
+			}
+			if (psn + goal.length() < phrase.length())
+			{
+				after = phrase.substring(
+						psn + goal.length(),
+						psn + goal.length() + 1);
+			}
+
+			// If before and after aren't letters, we've
+			// found the word
+			if (((before.compareTo("a") < 0) || (before
+					.compareTo("z") > 0)) // before is not a
+					// letter
+					&& ((after.compareTo("a") < 0) || (after
+					.compareTo("z") > 0)))
+			{
+				return psn;
+			}
+
+			// The last position didn't work, so let's find
+			// the next, if there is one.
+			psn = phrase.indexOf(goal, psn + 1);
+
 		}
 
-		System.out.println("Would you like a fantasy story then?");
-		if (hasKeyWord(in.nextLine(), "Yes"))
-		{
-
-		}
-
-	}
-	private static boolean hasKeyWord (String input, String keyWord)
-	{
-		input = input.toLowerCase();
-		keyWord = keyWord.toLowerCase();
-		if (input.indexOf(keyWord) == -1)
-		{
-			return false;
-		}
-
-		return true;
-	}
-	private static String charBefore(String input, String keyWord)
-	{
-		input = input.toLowerCase();
-		keyWord = keyWord.toLowerCase();
-		return input.substring(input.indexOf(keyWord)-1,input.indexOf(keyWord));
-	}
-	private static String charAfter(String input, String keyWord)
-	{
-		input = input.toLowerCase();
-		keyWord = keyWord.toLowerCase();
-		return input.substring(input.indexOf(keyWord)+keyWord.length(),input.indexOf(keyWord)+keyWord.length()+1);
+		return -1;
 	}
 }
