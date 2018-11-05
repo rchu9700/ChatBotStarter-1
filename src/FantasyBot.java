@@ -7,7 +7,7 @@ import java.util.Scanner;
  * @author Wei Chen
  * @version September 2018
  */
-public class BotBob
+public class FantasyBot
 {
 	//emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
 	int emotion = 0;
