@@ -12,11 +12,9 @@ public class ChatBotRunner {
 	 */
 	public static void main(String[] args)
 	{
-		String[] positiveResponses = {"Yes", " Yeah ", ""};
+		String[] positiveResponses = {"yes", " yeah ", "ok", "okay", "alright"};
 		String[] negativeResponses = {"No", "Nope", "No way", "Not a chance"};
-		MysteryBot mysteryBot = new MysteryBot();
-        FantasyBot fantasyBot = new FantasyBot();
-        SciFiBot sciFiBot = new SciFiBot();
+
 
         Scanner in = new Scanner (System.in);
 		String bot = "";
@@ -26,7 +24,7 @@ public class ChatBotRunner {
 		Boolean agree = false;
 		while (bot.equals(""))
 		{
-			input = in.nextLine();
+			input = in.nextLine().toLowerCase();
 			for (int i = 0; i < positiveResponses.length; i++)
 			{
 				if (positiveResponses[i].equals(input))
@@ -40,7 +38,7 @@ public class ChatBotRunner {
 				break;
 			}
 			System.out.println("Would you like a fantasy story then?");
-			input = in.nextLine();
+			input = in.nextLine().toLowerCase();
 			for (int i = 0; i < positiveResponses.length; i++)
 			{
 				if (positiveResponses[i].equals(input))
@@ -55,7 +53,7 @@ public class ChatBotRunner {
 			}
 			//
 			System.out.println("Would you like a scifi story then?");
-			input = in.nextLine();
+			input = in.nextLine().toLowerCase();
 			for (int i = 0; i < positiveResponses.length; i++)
 			{
 				if (positiveResponses[i].equals(input))
@@ -65,14 +63,48 @@ public class ChatBotRunner {
 			}
 			if (agree)
 			{
-				bot = "mystery";
+				bot = "scifi";
 				break;
 			}
 		}
-		System.out.println("It worked");
+		loop(bot);
+
+	}
+	private static void loop(String bot)
+	{
+		MysteryBot mysteryBot = new MysteryBot();
+		FantasyBot fantasyBot = new FantasyBot();
+		SciFiBot scifiBot = new SciFiBot();
+		Scanner in = new Scanner (System.in);
+		String statement = "";
+		if (bot == "scifi")
+		{
+			while (!statement.equals("Bye"))
+			{
+				scifiBot.chatLoop(statement);
+				statement = in.nextLine();
+			}
+		}
+		if (bot == "mystery")
+		{
+			while (!statement.equals("Bye"))
+			{
+				mysteryBot.chatLoop(statement);
+				statement = in.nextLine();
+			}
+		}
+		if (bot == "fantasy")
+		{
+			while (!statement.equals("Bye"))
+			{
+				fantasyBot.chatLoop(statement);
+				statement = in.nextLine();
+			}
+		}
 	}
 	private static boolean hasKeyWord (String statement, String goal)
 	{
+		goal = goal.toLowerCase();
 		statement = statement.toLowerCase();
 		if (findKeyword(statement,goal,0) != -1)
 		{
