@@ -79,27 +79,15 @@ public class ChatBotRunner {
 		String statement = "";
 		if (bot == "scifi")
 		{
-			while (!statement.equals("Bye"))
-			{
 				scifiBot.chatLoop(statement);
-				statement = in.nextLine();
-			}
 		}
 		if (bot == "mystery")
 		{
-			while (!statement.equals("Bye"))
-			{
 				mysteryBot.chatLoop(statement);
-				statement = in.nextLine();
-			}
 		}
 		if (bot == "fantasy")
 		{
-			while (!statement.equals("Bye"))
-			{
 				fantasyBot.chatLoop(statement);
-				statement = in.nextLine();
-			}
 		}
 	}
 	private static boolean hasKeyWord (String statement, String goal)
