@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class FantasyBot
 {
 	//emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
-	//int emotion = 0;
+	int emotion = 0;
 
 
 	/**
@@ -51,7 +51,13 @@ public class FantasyBot
 			}
 
 			//getResponse handles the user reply
-			System.out.println(getResponse(statement));
+			if (emotion > -5) {
+				System.out.println(getResponse(statement));
+			}
+			else{
+				System.out.println("BobBot got frustrated and killed you, the end...");
+				statement = "Bye";
+			}
 
 
 		}
@@ -86,12 +92,15 @@ public class FantasyBot
 			if (areYouSure == 0 ) {
 				responses[0] = statement;
 				response = "Is your name " + statement + "?";
+				emotion--;
 			}
 			else if(areYouSure == 1){
 				response = "Ok " + responses[0] + ", there are a few weapons on the ground, pick up a weapon and get on going";
+				emotion = emotion + 2;
 			}
 			else if(areYouSure == 2){
 				response = "Then, what is your name?";
+				emotion--;
 				areYouSure = 0;
 			}
 		}
