@@ -40,7 +40,12 @@ public class MysteryBot
 	 */
 	public String getGreeting()
 	{
-		return "Welcome to the mysterious story of who murdered Ms. Nathan! First off, what might be your name?";
+		return "Welcome to the mysterious story of who murdered Maria Nathan. First off, what might be your name?";
+	}
+
+	public String Backgroundinfo()
+	{
+		return statement + ""
 	}
 
 	/**
@@ -59,14 +64,16 @@ public class MysteryBot
 			response = "Say something, please.";
 		}
 
-		else {
-			System.out.println("Why hello " + statement + "! Let me tell you a brief little story about a friend of mine that goes by the name Maria Nathan. She was only 18 years old and went to Stanford University. It wasn't long before my precious " +
-					"little baby was murdered by the hands of someone very dangerous. She went clubbing late one night and never came back home. It hurts my heart that she just had to leave me at such a young age. That night, I filed a police report and " +
-					"it was reported that she was murdered by her drink being poisoned while she was with her friend Annissa Labrovsky. Ultimately, it came down to 3 suspects. The first person was a man by the name Matthew Lewis who was a close friend of Maria. " +
-					"His alibi was that he was in the bathroom during the time Maria was drinking and would never do something like that to her. The second suspect is a woman by the name of Jane Moore. Jane Moore is one of Maria's coworkers and sat across from Maria. " +
-					"Her alibi was that she was too busy talking to her boyfriend to have even poisoned Maria's drink. The last suspect would of course then have to be, Maria's friend Annissa. As shocking as this may sound, the police concluded that Annissa must be " +
-					"included as a suspect even though she was with Maria the whole time making it hard to poison her drink. However, I am sure that one of the three suspects is the murderer because they were the only ones who knew Maria. Can you help me crack this case? " +
-					"Start by saying \"I think it is\" and then the name of the murderer. Use context clues and the details from what I just gave you to make an educated guess.");
+		if {
+			System.out.println(statement + ", please for my sake, help me out. My daughter has been murdered and at this point, I don't even know what to do anymore. She was only 18 years old and went to Stanford University. ");
+			System.out.println("It wasn't long before my precious little baby was murdered by the hands of someone very dangerous. She went clubbing late one night and never came back home. ");
+			System.out.println("It hurts my heart that she just had to leave me at such a young age. That night, I filed a police report and it was reported that she was murdered by her drink being poisoned ");
+			System.out.println("while she was with her friend Annissa Labrovsky. Ultimately, it came down to 3 suspects. The first person was a man by the name Matthew Lewis who was a close friend of Maria. ");
+			System.out.println("His alibi was that he was in the bathroom during the time Maria was drinking and would never do something like that to her. The second suspect is a woman by the name of Jane Moore. ");
+			System.out.println("Jane Moore is one of Maria's coworkers and sat across from Maria. Her alibi was that she was too busy talking to her boyfriend to have even poisoned Maria's drink. The last suspect ");
+			System.out.println("would of course then have to be, Maria's friend Annissa. As shocking as this may sound, the police concluded that Annissa must be included as a suspect even though she was with Maria ");
+			System.out.println("the whole time making it hard to poison her drink. However, I am sure that one of the three suspects is the murderer because they were the only ones who knew Maria. ");
+			System.out.println("Can you help me crack this case? Start by saying \"I think it is\" and then the name of the murderer. Use context clues and the details from what I just gave you to make an educated guess.");
 		}
 
 	if (findKeyword(statement, "no") >= 0)
@@ -92,19 +99,10 @@ public class MysteryBot
 	}
 
 	// Response transforming I want to statement
-	else if (findKeyword(statement, "I want to", 0) >= 0)
+	else if (findKeyword(statement, "I think it is") >= 0)
 	{
-		response = transformIWantToStatement(statement);
+		response = transformIThinkItIsStatement(statement);
 	}
-	else if (findKeyword(statement, "I want",0) >= 0)
-	{
-		response = transformIWantToStatement(statement);
-	}
-	else
-	{
-		response = getRandomResponse();
-	}
-
 		return response;
 	}
 
@@ -114,7 +112,7 @@ public class MysteryBot
 	 * @param statement the user statement, assumed to contain "I think it is "
 	 * @return the transformed statement
 	 */
-	private String transformIWantToStatement(String statement)
+	private String transformIThinkItIsStatement(String statement)
 	{
 		//  Remove the final period, if there is one
 		statement = statement.trim();
@@ -126,7 +124,7 @@ public class MysteryBot
 					.length() - 1);
 		}
 		int psn = findKeyword (statement, "I think it is", 0);
-		String restOfStatement = statement.substring(psn + 9).trim();
+		String restOfStatement = statement.substring(psn + 13).trim();
 		return "Why do you think it is " + restOfStatement + "?";
 	}
 
@@ -206,37 +204,5 @@ public class MysteryBot
 	{
 		return findKeyword (statement, goal, 0);
 	}
-
-
-
-	/**
-	 * Pick a default response to use if nothing else fits.
-	 * @return a non-committal string
-	 */
-	private String getRandomResponse ()
-	{
-		Random r = new Random ();
-		if (emotion == 0)
-		{
-			return randomNeutralResponses [r.nextInt(randomNeutralResponses.length)];
-		}
-		if (emotion < 0)
-		{
-			return randomAngryResponses [r.nextInt(randomAngryResponses.length)];
-		}
-		return randomHappyResponses [r.nextInt(randomHappyResponses.length)];
-	}
-
-	private String [] randomNeutralResponses = {"Interesting, tell me more",
-			"Hmmm.",
-			"Do you really think so?",
-			"You don't say.",
-			"It's all boolean to me.",
-			"So, would you like to go for a walk?",
-			"Could you say that again?"
-	};
-	private String [] randomAngryResponses = {"Bahumbug.", "Harumph", "The rage consumes me!"};
-	private String [] randomHappyResponses = {"H A P P Y, what's that spell?", "Today is a good day", "You make me feel like a brand new pair of shoes."};
-
 }
 
