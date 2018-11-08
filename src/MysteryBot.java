@@ -63,7 +63,7 @@ public class MysteryBot
 			System.out.println("Why hello " + statement + "! Let me tell you a brief little story about a friend of mine that goes by the name Maria Nathan. She was only 18 years old and went to Stanford University. It wasn't long before my precious little baby was murdered by the hands of someone very dangerous. She went clubbing late one night and never came back home. It hurt  ");
 		}
 
-		else if (findKeyword(statement, "no") >= 0)
+		if (findKeyword(statement, "no") >= 0)
 		{
 			response = "Why so negative?";
                 	emotion--;
