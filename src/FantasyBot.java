@@ -17,16 +17,19 @@ public class FantasyBot
 	 * Runs the conversation for this particular chatbot, should allow switching to other chatbots.
 	 * @param statement the statement typed by the user
 	 */
+
 	private int rIndex;
 	private String[] responses;
 	private int areYouSure;
 	private boolean nextQuestion;
-	public FantasyBot(int rIndex, String[] responses, int areYouSure,boolean nextQuestion){
+
+	public FantasyBot(int rIndex, String[] responses, int areYouSure, boolean nextQuestion){
 		this.rIndex = rIndex;
 		this.responses = responses;
 		this.areYouSure = areYouSure;
 		this.nextQuestion = nextQuestion;
 	}
+
 
 	public void chatLoop(String statement)
 	{
@@ -58,6 +61,7 @@ public class FantasyBot
 				System.out.println("BobBot got frustrated and killed you, the end...");
 				statement = "Bye";
 			}
+			//System.out.println(responses[0]);
 
 
 		}
@@ -85,12 +89,12 @@ public class FantasyBot
 		
 		if (statement.length() == 0)
 		{
+			emotion--;
 			response = "Hey, don't ignore your BobBot, say something!";
 		}
 
 		else if (rIndex == 0){
 			if (areYouSure == 0 ) {
-				responses[0] = statement;
 				response = "Is your name " + statement + "?";
 				emotion--;
 			}
@@ -104,6 +108,29 @@ public class FantasyBot
 				areYouSure = 0;
 			}
 		}
+
+		/*else if (rIndex == 1){
+			if(findKeyword(statement, "Sword") >=0){
+
+			}
+			else if(findKeyword(statement, "Lolipop") >=0){
+
+			}
+			else if(findKeyword(statement, "Poop On a Stick") >=0){
+
+			}
+			else if(findKeyword(statement, "Wand") >=0){
+
+			}
+			else if(findKeyword(statement, "Gun") >=0){
+
+			}
+			else{
+
+			}
+		}
+		*/
+
 		/*else if (findKeyword(statement, "no") >= 0)
 		{
 			response = "Why so negative?";
@@ -129,7 +156,8 @@ public class FantasyBot
 		{
 			response = getRandomResponse();
 		}*/
-		
+
+		responses[rIndex] = statement;
 		return response;
 	}
 	
@@ -290,10 +318,10 @@ public class FantasyBot
 	 * Pick a default response to use if nothing else fits.
 	 * @return a non-committal string
 	 */
-	/*private String getRandomResponse ()
+	private String getRandomResponse ()
 	{
 		Random r = new Random ();
-		if (emotion == 0)
+		/*if (emotion == 0)
 		{	
 			return randomNeutralResponses [r.nextInt(randomNeutralResponses.length)];
 		}
@@ -302,9 +330,16 @@ public class FantasyBot
 			return randomAngryResponses [r.nextInt(randomAngryResponses.length)];
 		}	
 		return randomHappyResponses [r.nextInt(randomHappyResponses.length)];
-	}*/
-	
-	private String [] randomNeutralResponses = {"Interesting, tell me more",
+		*/
+	}
+
+	private String[] randomWeaponResponses = {"I don't see any of that here, how about a sword?",
+			"Do you really think that would be on the ground? Just pick up that Poop on a Stick!",
+			"Open your eyes, there are only a sword, a gun, a wand, a Lolipop, and a Poop on a Stick for you to choose from!"
+			"We don't have time for this, just get that Lolipop!"
+			};
+
+	/*private String [] randomNeutralResponses = {"Interesting, tell me more",
 			"Hmmm.",
 			"Do you really think so?",
 			"You don't say.",
@@ -314,5 +349,5 @@ public class FantasyBot
 	};
 	private String [] randomAngryResponses = {"Bahumbug.", "Harumph", "The rage consumes me!"};
 	private String [] randomHappyResponses = {"H A P P Y, what's that spell?", "Today is a good day", "You make me feel like a brand new pair of shoes."};
-	
+	*/
 }
