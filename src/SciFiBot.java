@@ -1,3 +1,5 @@
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.util.Random;
 import java.util.Scanner;
 
@@ -9,9 +11,11 @@ import java.util.Scanner;
  */
 public class SciFiBot
 {
+	String[] positiveResponses = {"yes", " yeah ", "ok", "okay", "alright", "affirmative", "o.k.", "o.k"};
+	String[] negativeResponses = {"no", "nope", "no way", "not a chance", "nah", "i decline", "negative"};
 	//emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
 	int emotion = 0;
-
+	String name = "";
 	/**
 	 * Runs the conversation for this particular chatbot, should allow switching to other chatbots.
 	 * @param statement the statement typed by the user
@@ -20,18 +24,11 @@ public class SciFiBot
 	{
 		Scanner in = new Scanner (System.in);
 		System.out.println (getGreeting());
-
-
-		while (!statement.equals("Bye"))
-		{
-
-
-			statement = in.nextLine();
-			//getResponse handles the user reply
-			System.out.println(getResponse(statement));
-
-
-		}
+		System.out.println (getName());
+		statement = in.nextLine();
+		name = statement;
+		System.out.println("Nice to meet you " + name + "!");
+		System.out.println("");
 
 	}
 	/**
@@ -40,7 +37,11 @@ public class SciFiBot
 	 */	
 	public String getGreeting()
 	{
-		return "Hi, what is up?";
+		return "Welcome to sci-fiBot, the number 1 science fiction chat bot!";
+	}
+	public String getName ()
+	{
+		return "What is your name?";
 	}
 	
 	/**
@@ -140,6 +141,30 @@ public class SciFiBot
 	 * @param statement the user statement, assumed to contain "I" followed by "you"
 	 * @return the transformed statement
 	 */
+	private boolean isPositive(String statement)
+	{
+		boolean agree = false;
+		for (int i = 0; i < positiveResponses.length; i++)
+		{
+			if (positiveResponses[i].equals(statement))
+			{
+				agree = true;
+			}
+		}
+		return agree;
+	}
+	private boolean isNegative(String statement)
+	{
+		boolean agree = false;
+		for (int i = 0; i < negativeResponses.length; i++)
+		{
+			if (negativeResponses[i].equals(statement))
+			{
+				agree = true;
+			}
+		}
+		return agree;
+	}
 	private String transformIYouStatement(String statement)
 	{
 		//  Remove the final period, if there is one

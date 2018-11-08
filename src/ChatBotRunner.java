@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+
 /**
  * A simple class to run our chatbot teams.
  * @author Ricky Chu, Wei Chen, Loris Jautakas
@@ -7,23 +8,25 @@ import java.util.Scanner;
  */
 public class ChatBotRunner {
 
+
 	/**
 	 * Create instances of each chatbot, give it user input, and print its replies. Switch chatbot responses based on which chatbot the user is speaking too.
 	 */
 	public static void main(String[] args)
 	{
-		String[] positiveResponses = {"yes", " yeah ", "ok", "okay", "alright"};
-		String[] negativeResponses = {"No", "Nope", "No way", "Not a chance"};
-
+		String[] positiveResponses = {"yes", " yeah ", "ok", "okay", "alright", "affirmative", "o.k.", "o.k"};
+		String[] negativeResponses = {"no", "nope", "no way", "not a chance", "nah", "i decline", "negative"};
 
         Scanner in = new Scanner (System.in);
 		String bot = "";
         System.out.println("Welcome to the storyBot, nice to meet you.");
-		System.out.println("Would you like a mystery story?");
+
 		String input = "";
 		Boolean agree = false;
+
 		while (bot.equals(""))
 		{
+			System.out.println("Would you like a mystery story?");
 			input = in.nextLine().toLowerCase();
 			for (int i = 0; i < positiveResponses.length; i++)
 			{
