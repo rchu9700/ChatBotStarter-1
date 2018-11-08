@@ -18,16 +18,18 @@ public class FantasyBot
 	 * @param statement the statement typed by the user
 	 */
 	private int rIndex;
-	public FantasyBot(int rIndex){
+	private String[] responses;
+	private int areYouSure;
+	private boolean nextQuestion;
+	public FantasyBot(int rIndex, String[] responses, int areYouSure,boolean nextQuestion){
 		this.rIndex = rIndex;
+		this.responses = responses;
+		this.areYouSure = areYouSure;
+		this.nextQuestion = nextQuestion;
 	}
 
 	public void chatLoop(String statement)
 	{
-		String[] responses;
-		responses = new String[5];
-		rIndex = 0;
-
 		Scanner in = new Scanner (System.in);
 		System.out.println (getGreeting());
 
@@ -35,8 +37,18 @@ public class FantasyBot
 		{
 			statement = in.nextLine();
 
+			if (findKeyword(statement, "yes") >= 0){
+				areYouSure = 1;
+			}
+			else if(findKeyword(statement, "no") >= 0){
+				areYouSure = 2;
+			}
+
+			if(nextQuestion){
 			responses[rIndex] = statement;
 			rIndex++;
+			nextQuestion = false;
+			}
 
 			//getResponse handles the user reply
 			System.out.println(getResponse(statement));
@@ -70,8 +82,17 @@ public class FantasyBot
 			response = "Hey, don't ignore your BobBot, say something!";
 		}
 
-		else if (rIndex = 0){
-			response = "Is your name " + statement + " ?";
+		else if (rIndex == 0){
+			if (areYouSure == 0 ) {
+				response = "Is your name " + statement + " ?";
+			}
+			else if(areYouSure == 1){
+				response = "Ok " + responses[0] + ", there are a few weapons on the ground, pick up a weapon and get on moving";
+			}
+			else if(areYouSure == 2){
+				response = "Then, what is your name?";
+				areYouSure = 0;
+			}
 		}
 		/*else if (findKeyword(statement, "no") >= 0)
 		{

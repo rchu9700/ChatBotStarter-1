@@ -73,7 +73,7 @@ public class ChatBotRunner {
 	private static void loop(String bot)
 	{
 		MysteryBot mysteryBot = new MysteryBot();
-		FantasyBot fantasyBot = new FantasyBot();
+		FantasyBot fantasyBot = new FantasyBot(0,new String[5],0,false);
 		SciFiBot scifiBot = new SciFiBot();
 		Scanner in = new Scanner (System.in);
 		String statement = "";
