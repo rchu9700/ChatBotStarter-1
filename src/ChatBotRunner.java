@@ -143,7 +143,6 @@ public class ChatBotRunner {
 			psn = phrase.indexOf(goal, psn + 1);
 
 		}
-
 		return -1;
 	}
 }
