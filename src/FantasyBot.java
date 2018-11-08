@@ -44,8 +44,8 @@ public class FantasyBot
 				areYouSure = 2;
 			}
 
+
 			if(nextQuestion){
-			responses[rIndex] = statement;
 			rIndex++;
 			nextQuestion = false;
 			}
@@ -63,7 +63,7 @@ public class FantasyBot
 	 */	
 	public String getGreeting()
 	{
-		return "Hi, I'm BobBot." + "/n" + "You have awaken in the world ruled by the demon lord, you must defeat the demon lord to return home!" +"/n" + "So, what is your divine name?";
+		return "Hi, I'm BobBot." + "\n" + "You have awaken in the world ruled by the demon lord, you must defeat the demon lord to return home!" + "\n" + "So, what is your divine name?";
 	}
 	
 	/**
@@ -84,10 +84,11 @@ public class FantasyBot
 
 		else if (rIndex == 0){
 			if (areYouSure == 0 ) {
-				response = "Is your name " + statement + " ?";
+				responses[0] = statement;
+				response = "Is your name " + statement + "?";
 			}
 			else if(areYouSure == 1){
-				response = "Ok " + responses[0] + ", there are a few weapons on the ground, pick up a weapon and get on moving";
+				response = "Ok " + responses[0] + ", there are a few weapons on the ground, pick up a weapon and get on going";
 			}
 			else if(areYouSure == 2){
 				response = "Then, what is your name?";
