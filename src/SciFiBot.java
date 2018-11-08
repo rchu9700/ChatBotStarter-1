@@ -14,8 +14,9 @@ public class SciFiBot
 	String[] positiveResponses = {"yes", " yeah ", "ok", "okay", "alright", "affirmative", "o.k.", "o.k"};
 	String[] negativeResponses = {"no", "nope", "no way", "not a chance", "nah", "i decline", "negative"};
 	//emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
-	int emotion = 0;
+	// int emotion = 0;
 	String name = "";
+	int luck = 10;
 	/**
 	 * Runs the conversation for this particular chatbot, should allow switching to other chatbots.
 	 * @param statement the statement typed by the user
@@ -24,71 +25,29 @@ public class SciFiBot
 	{
 		Scanner in = new Scanner (System.in);
 		System.out.println (getGreeting());
-		System.out.println (getName());
+		System.out.println (askName());
 		statement = in.nextLine();
 		name = statement;
 		System.out.println("Nice to meet you " + name + "!");
-		System.out.println("");
+		System.out.println("It is the year 2100. A man walks up to you and says:");
+		System.out.println("My ship broke!" +requests[]);
 
 	}
 	/**
 	 * Get a default greeting 	
 	 * @return a greeting
 	 */	
-	public String getGreeting()
+	private String getGreeting()
 	{
 		return "Welcome to sci-fiBot, the number 1 science fiction chat bot!";
 	}
-	public String getName ()
+	private String askName ()
 	{
 		return "What is your name?";
 	}
 	
-	/**
-	 * Gives a response to a user statement
-	 * 
-	 * @param statement
-	 *            the user statement
-	 * @return a response based on the rules given
-	 */
-	public String getResponse(String statement)
-	{
-		String response = "";
-		
-		if (statement.length() == 0)
-		{
-			response = "Say something, please.";
-		}
 
-		else if (findKeyword(statement, "no") >= 0)
-		{
-			response = "Why so negative?";
-                	emotion--;
-		}
-		
-		else if (findKeyword(statement, "levin") >= 0)
-		{
-			response = "More like LevinTheDream amiright?";
-			emotion++;
-		}
 
-		// Response transforming I want to statement
-		else if (findKeyword(statement, "I want to", 0) >= 0)
-		{
-			response = transformIWantToStatement(statement);
-		}
-		else if (findKeyword(statement, "I want",0) >= 0)
-		{
-			response = transformIWantStatement(statement);
-		}	
-		else
-		{
-			response = getRandomResponse();
-		}
-		
-		return response;
-	}
-	
 	/**
 	 * Take a statement with "I want to <something>." and transform it into 
 	 * "Why do you want to <something>?"
@@ -165,27 +124,7 @@ public class SciFiBot
 		}
 		return agree;
 	}
-	private String transformIYouStatement(String statement)
-	{
-		//  Remove the final period, if there is one
-		statement = statement.trim();
-		String lastChar = statement.substring(statement
-				.length() - 1);
-		if (lastChar.equals("."))
-		{
-			statement = statement.substring(0, statement
-					.length() - 1);
-		}
-		
-		int psnOfI = findKeyword (statement, "I", 0);
-		int psnOfYou = findKeyword (statement, "you", psnOfI);
-		
-		String restOfStatement = statement.substring(psnOfI + 1, psnOfYou).trim();
-		return "Why do you " + restOfStatement + " me?";
-	}
-	
 
-	
 	
 	/**
 	 * Search for one word in phrase. The search is not case
@@ -262,36 +201,24 @@ public class SciFiBot
 	{
 		return findKeyword (statement, goal, 0);
 	}
-	
-
-
-	/**
-	 * Pick a default response to use if nothing else fits.
-	 * @return a non-committal string
-	 */
-	private String getRandomResponse ()
+	private int randomNumber(int lowerlim, int upperlim)
 	{
-		Random r = new Random ();
-		if (emotion == 0)
-		{	
-			return randomNeutralResponses [r.nextInt(randomNeutralResponses.length)];
-		}
-		if (emotion < 0)
-		{	
-			return randomAngryResponses [r.nextInt(randomAngryResponses.length)];
-		}	
-		return randomHappyResponses [r.nextInt(randomHappyResponses.length)];
+
 	}
 	
-	private String [] randomNeutralResponses = {"Interesting, tell me more",
-			"Hmmm.",
-			"Do you really think so?",
-			"You don't say.",
-			"It's all boolean to me.",
-			"So, would you like to go for a walk?",
-			"Could you say that again?"
-	};
-	private String [] randomAngryResponses = {"Bahumbug.", "Harumph", "The rage consumes me!"};
-	private String [] randomHappyResponses = {"H A P P Y, what's that spell?", "Today is a good day", "You make me feel like a brand new pair of shoes."};
-	
+	private String [] requests =
+			{
+					"Can you get me a hypercube?",
+					"Can you find me an intergalactic space capsule?",
+					"Can you find me a hyperdrive?"
+			};
+	private String [] goals =
+			{
+					"hypercube",
+					"intergalactic space capsule?",
+					"hyperdrive"
+			};
+
+
+
 }
