@@ -10,24 +10,34 @@ import java.util.Scanner;
 public class FantasyBot
 {
 	//emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
-	int emotion = 0;
+	//int emotion = 0;
 
 
 	/**
 	 * Runs the conversation for this particular chatbot, should allow switching to other chatbots.
 	 * @param statement the statement typed by the user
 	 */
+	private int rIndex;
+	public FantasyBot(int rIndex){
+		this.rIndex = rIndex;
+	}
+
 	public void chatLoop(String statement)
 	{
+		String[] responses;
+		responses = new String[5];
+		rIndex = 0;
+
 		Scanner in = new Scanner (System.in);
 		System.out.println (getGreeting());
 
-
 		while (!statement.equals("Bye"))
 		{
-
-
 			statement = in.nextLine();
+
+			responses[rIndex] = statement;
+			rIndex++;
+
 			//getResponse handles the user reply
 			System.out.println(getResponse(statement));
 
@@ -41,7 +51,7 @@ public class FantasyBot
 	 */	
 	public String getGreeting()
 	{
-		return "Hi, I'm BobBot, your Spirit Guardian." + "/n" + "you have awaken in the world ruled by the demon lord, you must defeat the demon lord to return home!" +"/n" + "So, what is your divine name?";
+		return "Hi, I'm BobBot." + "/n" + "You have awaken in the world ruled by the demon lord, you must defeat the demon lord to return home!" +"/n" + "So, what is your divine name?";
 	}
 	
 	/**
@@ -57,19 +67,22 @@ public class FantasyBot
 		
 		if (statement.length() == 0)
 		{
-			response = "Say something, please.";
+			response = "Hey, don't ignore your BobBot, say something!";
 		}
 
-		else if (findKeyword(statement, "no") >= 0)
+		else if (rIndex = 0){
+			response = "Is your name " + statement + " ?";
+		}
+		/*else if (findKeyword(statement, "no") >= 0)
 		{
 			response = "Why so negative?";
-                	emotion--;
+			//emotion--;
 		}
 		
 		else if (findKeyword(statement, "levin") >= 0)
 		{
 			response = "More like LevinTheDream amiright?";
-			emotion++;
+			//emotion++;
 		}
 
 		// Response transforming I want to statement
@@ -84,7 +97,7 @@ public class FantasyBot
 		else
 		{
 			response = getRandomResponse();
-		}
+		}*/
 		
 		return response;
 	}
@@ -246,7 +259,7 @@ public class FantasyBot
 	 * Pick a default response to use if nothing else fits.
 	 * @return a non-committal string
 	 */
-	private String getRandomResponse ()
+	/*private String getRandomResponse ()
 	{
 		Random r = new Random ();
 		if (emotion == 0)
@@ -258,7 +271,7 @@ public class FantasyBot
 			return randomAngryResponses [r.nextInt(randomAngryResponses.length)];
 		}	
 		return randomHappyResponses [r.nextInt(randomHappyResponses.length)];
-	}
+	}*/
 	
 	private String [] randomNeutralResponses = {"Interesting, tell me more",
 			"Hmmm.",
