@@ -20,7 +20,6 @@ public class MysteryBot
 	{
 		Scanner in = new Scanner (System.in);
 		System.out.println(getName());
-		System.out.println(getBackgroundInfo());
 
 		while (!statement.equals("Bye"))
 		{
@@ -45,7 +44,7 @@ public class MysteryBot
 
 	public void getBackgroundInfo()
 	{
-		System.out.println(statement + ", please for my sake, help me out. My daughter has been murdered and at this point, I don't even know what to do anymore. She was only 18 years old and went to Stanford University. ");
+		System.out.println( ", please for my sake, help me out. My daughter has been murdered and at this point, I don't even know what to do anymore. She was only 18 years old and went to Stanford University. ");
 		System.out.println("It wasn't long before my precious little baby was murdered by the hands of someone very dangerous. She went clubbing late one night and never came back home. ");
 		System.out.println("It hurts my heart that she just had to leave me at such a young age. That night, I filed a police report and it was reported that she was murdered by her drink being poisoned ");
 		System.out.println("while she was with her friend Annissa Labrovsky. Ultimately, it came down to 3 suspects. The first person was a man by the name Matthew Lewis who was a close friend of Maria. ");

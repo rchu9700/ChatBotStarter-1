@@ -15,14 +15,17 @@ public class SciFiBot
 	String[] negativeResponses = {"no", "nope", "no way", "not a chance", "nah", "i decline", "negative"};
 	//emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
 	// int emotion = 0;
-	String name = "";
-	int luck = 10;
+
 	/**
 	 * Runs the conversation for this particular chatbot, should allow switching to other chatbots.
 	 * @param statement the statement typed by the user
 	 */
 	public void chatLoop(String statement)
 	{
+		String name = "";
+		int luck = 10;
+		int quest = (int)(randomNumber(0, requests.length));
+		String goal = goals[quest];
 		Scanner in = new Scanner (System.in);
 		System.out.println (getGreeting());
 		System.out.println (askName());
@@ -30,8 +33,13 @@ public class SciFiBot
 		name = statement;
 		System.out.println("Nice to meet you " + name + "!");
 		System.out.println("It is the year 2100. A man walks up to you and says:");
-		System.out.println("My ship broke!" + requests[randomNumber(0,requests.length)]);
-
+		System.out.println("My ship broke! " + requests[quest]);
+		System.out.println("Will you help me?");
+		statement = in.nextLine();
+		if (isPositive(statement))
+		{
+			System.out.println("Thanks!");
+		}
 	}
 	/**
 	 * Get a default greeting 	
@@ -203,7 +211,7 @@ public class SciFiBot
 	}
 	private int randomNumber(int lowerlim, int upperlim)
 	{
-		return 1;
+		return (int)(Math.random()*(upperlim-lowerlim)+lowerlim);
 	}
 	
 	private String [] requests =
