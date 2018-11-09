@@ -30,7 +30,7 @@ public class SciFiBot
 		name = statement;
 		System.out.println("Nice to meet you " + name + "!");
 		System.out.println("It is the year 2100. A man walks up to you and says:");
-		System.out.println("My ship broke!" +requests[]);
+		System.out.println("My ship broke!" + requests[randomNumber(0,requests.length)]);
 
 	}
 	/**
@@ -203,7 +203,7 @@ public class SciFiBot
 	}
 	private int randomNumber(int lowerlim, int upperlim)
 	{
-
+		return 1;
 	}
 	
 	private String [] requests =
