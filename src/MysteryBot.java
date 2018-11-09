@@ -19,8 +19,8 @@ public class MysteryBot
 	public void chatLoop(String statement)
 	{
 		Scanner in = new Scanner (System.in);
-		System.out.println (getGreeting());
-
+		System.out.println(getName());
+		System.out.println(getBackgroundInfo());
 
 		while (!statement.equals("Bye"))
 		{
@@ -38,14 +38,22 @@ public class MysteryBot
 	 * Get a default greeting
 	 * @return a greeting
 	 */
-	public String getGreeting()
+	public String getName()
 	{
 		return "Welcome to the mysterious story of who murdered Maria Nathan. First off, what might be your name?";
 	}
 
-	public String Backgroundinfo()
+	public void getBackgroundInfo()
 	{
-		return statement + ""
+		System.out.println(statement + ", please for my sake, help me out. My daughter has been murdered and at this point, I don't even know what to do anymore. She was only 18 years old and went to Stanford University. ");
+		System.out.println("It wasn't long before my precious little baby was murdered by the hands of someone very dangerous. She went clubbing late one night and never came back home. ");
+		System.out.println("It hurts my heart that she just had to leave me at such a young age. That night, I filed a police report and it was reported that she was murdered by her drink being poisoned ");
+		System.out.println("while she was with her friend Annissa Labrovsky. Ultimately, it came down to 3 suspects. The first person was a man by the name Matthew Lewis who was a close friend of Maria. ");
+		System.out.println("His alibi was that he was in the bathroom during the time Maria was drinking and would never do something like that to her. The second suspect is a woman by the name of Jane Moore. ");
+		System.out.println("Jane Moore was the bartender of that night and served the drinks to the two girls. However, she claims that she didn't have any cyanide or poison on her to toxicate the drinks. The last suspect ");
+		System.out.println("would of course then have to be, Maria's friend Annissa. As shocking as this may sound, the police concluded that Annissa must be included as a suspect even though she was with Maria ");
+		System.out.println("the whole time making it hard to poison her drink. However, I am sure that one of the three suspects is the murderer because they were the only ones who knew Maria. ");
+		System.out.println("Can you help me crack this case? Start by saying \"I think it is\" and then the name of the murderer. Use context clues and the details from what I just gave you to make an educated guess.");
 	}
 
 	/**
@@ -59,22 +67,11 @@ public class MysteryBot
 	{
 		String response = "";
 
-		if (statement.length() == 0)
+	if (statement.length() == 0)
 		{
 			response = "Say something, please.";
 		}
 
-		if {
-			System.out.println(statement + ", please for my sake, help me out. My daughter has been murdered and at this point, I don't even know what to do anymore. She was only 18 years old and went to Stanford University. ");
-			System.out.println("It wasn't long before my precious little baby was murdered by the hands of someone very dangerous. She went clubbing late one night and never came back home. ");
-			System.out.println("It hurts my heart that she just had to leave me at such a young age. That night, I filed a police report and it was reported that she was murdered by her drink being poisoned ");
-			System.out.println("while she was with her friend Annissa Labrovsky. Ultimately, it came down to 3 suspects. The first person was a man by the name Matthew Lewis who was a close friend of Maria. ");
-			System.out.println("His alibi was that he was in the bathroom during the time Maria was drinking and would never do something like that to her. The second suspect is a woman by the name of Jane Moore. ");
-			System.out.println("Jane Moore is one of Maria's coworkers and sat across from Maria. Her alibi was that she was too busy talking to her boyfriend to have even poisoned Maria's drink. The last suspect ");
-			System.out.println("would of course then have to be, Maria's friend Annissa. As shocking as this may sound, the police concluded that Annissa must be included as a suspect even though she was with Maria ");
-			System.out.println("the whole time making it hard to poison her drink. However, I am sure that one of the three suspects is the murderer because they were the only ones who knew Maria. ");
-			System.out.println("Can you help me crack this case? Start by saying \"I think it is\" and then the name of the murderer. Use context clues and the details from what I just gave you to make an educated guess.");
-		}
 
 	if (findKeyword(statement, "no") >= 0)
 	{
