@@ -19,7 +19,7 @@ public class MysteryBot
 	{
 		Scanner in = new Scanner (System.in);
 		System.out.println(getName());
-		System.out.println(getBackgroundInfo());
+		System.out.println(getBackgroundInfo(statement));
 
 		while (!statement.equals("Bye"))
 		{
