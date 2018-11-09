@@ -95,12 +95,15 @@ public class FantasyBot
 
 		else if (rIndex == 0){
 			if (areYouSure == 0 ) {
-				response = "Is your name " + statement + "?";
+				String name = statement;
+				response = "Is your name " + name + "?";
+				responses[0] = name;
 				emotion--;
 			}
 			else if(areYouSure == 1){
 				response = "Ok " + responses[0] + ", there are a few weapons on the ground, pick up a weapon and get on going";
 				emotion = emotion + 2;
+				nextQuestion = true;
 			}
 			else if(areYouSure == 2){
 				response = "Then, what is your name?";
@@ -110,31 +113,33 @@ public class FantasyBot
 		}
 
 		else if (rIndex == 1){
+			String weapon = "noWeapon";
 			if(findKeyword(statement, "Sword") >=0){
 				response = "Is this Sword your weapon of choice?";
-				statement = "Sword";
+				weapon = "Sword";
 			}
 			else if(findKeyword(statement, "Lolipop") >=0){
 				response = "A Lolipop, that's a unique one!";
-				statement = "Lolipop";
+				weapon = "Lolipop";
 			}
 			else if(findKeyword(statement, "Poop On a Stick") >=0){
 				response = "A Poop on a Stick, you have good eyes";
-				statement = "Poop on a Stick";
+				weapon = "Poop on a Stick";
 			}
 			else if(findKeyword(statement, "Wand") >=0){
 				response = "This Wand will bring you magic";
-				statement = "Wand";
+				weapon = "Wand";
 			}
 			else if(findKeyword(statement, "Gun") >=0){
 				response = "You better know how to aim with this Gun";
-				statement = "Gun";
+				weapon = "Gun";
 
 			}
 			else{
 				response = getRandomResponse();
 
 			}
+			responses[2] = weapon;
 		}
 
 
@@ -164,8 +169,6 @@ public class FantasyBot
 			response = getRandomResponse();
 		}*/
 
-		responses[rIndex] = statement;
-		areYouSure = 0;
 		return response;
 	}
 	
