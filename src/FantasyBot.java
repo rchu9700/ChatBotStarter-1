@@ -109,27 +109,34 @@ public class FantasyBot
 			}
 		}
 
-		/*else if (rIndex == 1){
+		else if (rIndex == 1){
 			if(findKeyword(statement, "Sword") >=0){
-
+				response = "Is this Sword your weapon of choice?";
+				statement = "Sword";
 			}
 			else if(findKeyword(statement, "Lolipop") >=0){
-
+				response = "A Lolipop, that's a unique one!";
+				statement = "Lolipop";
 			}
 			else if(findKeyword(statement, "Poop On a Stick") >=0){
-
+				response = "A Poop on a Stick, you have good eyes";
+				statement = "Poop on a Stick";
 			}
 			else if(findKeyword(statement, "Wand") >=0){
-
+				response = "This Wand will bring you magic";
+				statement = "Wand";
 			}
 			else if(findKeyword(statement, "Gun") >=0){
+				response = "You better know how to aim with this Gun";
+				statement = "Gun";
 
 			}
 			else{
+				response = getRandomResponse();
 
 			}
 		}
-		*/
+
 
 		/*else if (findKeyword(statement, "no") >= 0)
 		{
@@ -158,6 +165,7 @@ public class FantasyBot
 		}*/
 
 		responses[rIndex] = statement;
+		areYouSure = 0;
 		return response;
 	}
 	
@@ -321,6 +329,9 @@ public class FantasyBot
 	private String getRandomResponse ()
 	{
 		Random r = new Random ();
+		if (rIndex == 1){
+			return randomWeaponResponses[r.nextInt(randomWeaponResponses.length)];
+		}
 		/*if (emotion == 0)
 		{	
 			return randomNeutralResponses [r.nextInt(randomNeutralResponses.length)];
@@ -331,11 +342,12 @@ public class FantasyBot
 		}	
 		return randomHappyResponses [r.nextInt(randomHappyResponses.length)];
 		*/
+		return randomWeaponResponses[r.nextInt(randomWeaponResponses.length)];
 	}
 
 	private String[] randomWeaponResponses = {"I don't see any of that here, how about a sword?",
 			"Do you really think that would be on the ground? Just pick up that Poop on a Stick!",
-			"Open your eyes, there are only a sword, a gun, a wand, a Lolipop, and a Poop on a Stick for you to choose from!"
+			"Open your eyes, there are only a sword, a gun, a wand, a Lolipop, and a Poop on a Stick for you to choose from!",
 			"We don't have time for this, just get that Lolipop!"
 			};
 
