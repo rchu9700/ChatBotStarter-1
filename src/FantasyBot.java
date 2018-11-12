@@ -23,6 +23,13 @@ public class FantasyBot
 	private int areYouSure;
 	private boolean nextQuestion;
 
+	/**
+	 * Initialize
+	 * @param rIndex dictates the stage and progress of the story.
+	 * @param responses an array that record the decision/choices that the user makes.
+	 * @param areYouSure Used to give user a chance to change his decision/choice.
+	 * @param nextQuestion Signal to proceed
+	 */
 	public FantasyBot(int rIndex, String[] responses, int areYouSure, boolean nextQuestion){
 		this.rIndex = rIndex;
 		this.responses = responses;
@@ -47,7 +54,6 @@ public class FantasyBot
 				areYouSure = 2;
 			}
 
-
 			if(nextQuestion){
 			rIndex++;
 			nextQuestion = false;
@@ -55,6 +61,8 @@ public class FantasyBot
 			}
 
 			//getResponse handles the user reply
+			//The story ends when emotion goes below -5, not answering the questions correctly decreases BobBot's emotion.
+			// Or when a certain event causes emotion to be -100.
 			if (emotion > -5) {
 				System.out.println(getResponse(statement));
 			}
@@ -100,6 +108,7 @@ public class FantasyBot
 			response = "Hey, don't ignore your BobBot, say something!";
 		}
 
+		//Stage #1: Asking for user's name.
 		else if (rIndex == 0){
 			if (areYouSure == 0 ) {
 				String name = statement;
@@ -119,6 +128,7 @@ public class FantasyBot
 			}
 		}
 
+		//Stage #2: Asking the user to choose between five weapons given.
 		else if (rIndex == 1){
 			if (areYouSure == 0) {
 				String weapon = "noWeapon";
@@ -169,6 +179,7 @@ public class FantasyBot
 
 		}
 
+		//Stage #3: Ask the user to choose between the three paths given, each with their own danger.
 		else if(rIndex == 2){
 
 			if (areYouSure ==0){
@@ -226,6 +237,7 @@ public class FantasyBot
 			}
 		}
 
+		//Stage #4: Ask the user to take action against the corresponding danger of each path. The weapon they're holding determines their success.
 		else if(rIndex == 3){
 			if(findKeyword(statement, "attack") >= 0) {
 				if(responses[2].equals("left")){
@@ -329,6 +341,7 @@ public class FantasyBot
 			}
 		}
 
+		//Stage #5: Ask the user their action against the demon lord.
 		else if(rIndex == 4){
 			if (findKeyword(statement, "attack")>=0){
 				if(responses[1].equals("Lolipop")){
@@ -356,6 +369,7 @@ public class FantasyBot
 			}
 		}
 
+		//Stage #6: Ask the user whether or not they want to return home, the story ends either way.
 		else if(rIndex == 5){
 			if(findKeyword(statement,"yes")>=0){
 				response = "I will send you home then!" + "\n" + "BobBot send you home, but he became the next demon lord that rule this world for eternity!";
@@ -501,6 +515,8 @@ public class FantasyBot
 	private String getRandomResponse ()
 	{
 		Random r = new Random ();
+		
+		//Three different random responses at three different stages of the story.
 		if (rIndex == 1){
 			return randomWeaponResponses[r.nextInt(randomWeaponResponses.length)];
 		}
