@@ -59,7 +59,12 @@ public class FantasyBot
 				System.out.println(getResponse(statement));
 			}
 			else{
-				System.out.println("BobBot got frustrated and killed you, the end...");
+				if (emotion == -100){
+					System.out.println("The End");
+				}
+				else{
+					System.out.println("BobBot got frustrated and killed you, the end...");
+				}
 				statement = "Bye";
 			}
 			//System.out.println(responses[0]);
@@ -74,7 +79,7 @@ public class FantasyBot
 	 */	
 	public String getGreeting()
 	{
-		return "Hi, I'm BobBot." + "\n" + "You have awaken in the world ruled by the demon lord, you must defeat the demon lord to return home!" + "\n" + "So, what is your divine name?";
+		return "BobBot: Hi, I'm BobBot." + "\n" + "BobBot: You have awaken in the world ruled by the demon lord, you must defeat the demon lord to return home!" + "\n" + "BobBot: So, what is your divine name?";
 	}
 	
 	/**
@@ -139,13 +144,14 @@ public class FantasyBot
 					}
 					else {
 						response = getRandomResponse();
+						emotion--;
 					}
 					isRandomResponse = true;
 
 				}
 				responses[1] = weapon;
 				if (isRandomResponse == false) {
-					response = response + "\n" + "Are you sure you want " + weapon + "? You won't have room for any other weapons!";
+					response = response + "\n" + "BobBot: " + responses[0] + ", Are you sure you want " + weapon + "? You won't have room for any other weapons!";
 				}
 				isRandomResponse = false;
 			}
@@ -162,24 +168,30 @@ public class FantasyBot
 
 
 		}
+
 		else if(rIndex == 2){
 
 			if (areYouSure ==0){
 				String path = "no where";
 				if(findKeyword(statement, "middle") >= 0){
-					response = "I sense a huge goblin army coming toward us from the middle path, Shall we continue down this path?";
+					response = "I sense a huge goblin army coming toward us from the middle path," + responses[0] + ", Shall we continue down this path?";
 					path = "middle";
 				}
 				else if(findKeyword(statement, "left") >= 0){
-					response = "The forest of mushrooms toward our left is giving off dark ominous winds. Do you really want to go from this route?";
+					response = "The forest of mushrooms toward our left is giving off dark ominous winds. " + responses[0] + ", Do you really want to go from this route?";
 					path = "left";
 				}
 				else if(findKeyword(statement, "right") >= 0){
-					response = "The right path is covered in giant poops, from large creatures I suppose. I can fly over the poops, but you would have to swim across. Are you sure you want to be covered in poops?";
+					response = "The right path is covered in giant poops, from large creatures I suppose. I can fly over the poops, but you would have to swim across. " + responses[0] + ", Are you sure you want to be covered in poops?";
 					path = "right";
 				}
 				else if(findKeyword(statement, "I want to") >=0){
 					response = transformIWantToStatement(statement);
+					emotion--;
+				}
+				else if(findKeyword(statement, "I want") >=0){
+					response = transformIWantStatement(statement);
+					emotion--;
 				}
 				else{
 					if (findKeyword(statement, "path") >=0 || findKeyword(statement, "paths") >=0){
@@ -195,12 +207,163 @@ public class FantasyBot
 				response = "Ok, looks like you have chosen the " + responses[2] + " path. Let's move on with caution!";
 				emotion = emotion +2;
 				nextQuestion = true;
+
+				if(responses[2].equals("left")){
+					response = response + "\n" + "BobBot: " + responses[0] + ", I think you have encountered the true darkness in Mushroom forest, and have lost your way. What do you do?";
+				}
+				else if(responses[2].equals("right")){
+					response = response + "\n" + "BobBot: " + responses[0] + ", Never mind you smelling terrible, a poop monster has appeared ahead, what do you want to do with it?";
+				}
+				else { //middle
+					response = response + "\n" + "BobBot: The goblin army is fast approaching, " + responses[0] + ", what is your counter measure?";
+				}
+
 			}
 			else if (areYouSure ==2){
-				response = "Non-sense! Make your chose now or I will end you here myself!";
+				response = "Non-sense! " + responses[0] + "! Make your chose now or I will end you here myself!";
 				emotion= emotion - 2;
 				areYouSure=0;
 			}
+		}
+
+		else if(rIndex == 3){
+			if(findKeyword(statement, "attack") >= 0) {
+				if(responses[2].equals("left")){
+					response = "Ok " + responses[0] + ", go for it!" + "\n" + "You tried to attack true dark with " + responses[1] + ", but has no effect. The darkness consumed you.";
+					emotion = -100;
+				}
+				else if(responses[2].equals("right")){
+					response = "Ok " + responses[0] + ", go for it!" + "\n" + "You tried to attack the Poop Monster with " + responses[1] + ", but has no effect. The Poop Monster used body slam and drowned you in poop.";
+					emotion = -100;
+				}
+				else{
+					response = "Ok " + responses[0] + ", go for it!" + "\n" + "You tried to attack the Goblin Army with " + responses[1] + ", but only managed to kill a few. The goblins outnumbered you and slaughtered you.";
+					emotion = -100;
+				}
+			}
+			else if(findKeyword(statement,"eat") >=0 || findKeyword(statement,"suck") >=0){
+				if(responses[1].equals("Lolipop")){
+					response = responses[0] +"! You all powered up!";
+					if(responses[2].equals("left")){
+						response = response + "\n" + "But the power up did not help" + responses [0] + "find his way, he's forever lost in the mushroom forest";
+						emotion = -100;
+					}
+					else{
+						response = response + "\n" + responses [0] + " defeated all monsters ahead and moved on towards the demon lord" + "\n" + "BobBot; Oh is that the demon lord up there!" + responses[0] + "! What do we do?";
+						emotion++;
+						nextQuestion = true;
+					}
+				}
+				else{
+					response = "How are you going to eat " + responses[1]+ "?";
+					emotion--;
+				}
+			}
+			else if(findKeyword(statement, "magic") >= 0) {
+				if(responses[1].equals("Wand")){
+					response = "Alright " + responses[0] + " use fireball!" + "\n" + "Oh no! You have no mana, thus can not use magic! You been consumed by the danger!";
+					emotion= -100;
+				}
+				else{
+					response = "How can you use magic without a wand?";
+					emotion--;
+				}
+			}
+			else if(findKeyword(statement, "fire") >= 0 || findKeyword(statement,"shoot") >=0) {
+				if(responses[1].equals("Gun")){
+					response = "Alright " + responses[0] + " fire away!" + "\n" + "Oh no! You have no bullets, and can't fire any shots! You been consumed by the danger";
+					emotion= -100;
+				}
+				else{
+					response = "How can you going to fire a gun without a gun?";
+					emotion--;
+				}
+			}
+			else if(findKeyword(statement,"run") >=0 || findKeyword(statement,"back")>=0){
+				if(responses[2].equals("left")){
+					response = "You can't find your way out of the mushroom forest because you can't see anything!";
+					emotion--;
+				}
+				else if(responses[2].equals("right")){
+					response = "Another Poop Monster appeared behind you! " + responses[0] + "! There is no where to run!";
+					emotion--;
+				}
+				else{
+					response ="The goblin cavaliers run faster than you on their wolves!" + "\n" + "You got slain by the goblins.";
+					emotion = -100;
+				}
+			}
+			else if(findKeyword(statement, "talk") >= 0 || findKeyword(statement,"negotiate") >=0) {
+
+				if(responses[2].equals("left")){
+					response = "Talk? Talk to who? Me? Right now is not the time for it!";
+					emotion--;
+				}
+				else if(responses[2].equals("right")){
+					if (responses[1].equals("Poop on a Stick")){
+						response = "The Poop Monster seem to acknowledge your Poop on a Stick!" + "\n" + "The Poop Monsters are now on your command!" + "\n" + "BobBot; Oh is that the demon lord up there!" + responses[0] + "! What do we do?";
+						emotion++;
+						nextQuestion = true;
+					}
+					else{
+						response = "..."+"\n"+"The Poop Monsters responded by crushing you";
+						emotion=-100;
+					}
+				}
+				else{
+					response = "..."+"\n"+ "The goblins responded with thousands of arrow, they appear not understanding your language!";
+					emotion = -100;
+				}
+			}
+			else if(findKeyword(statement, "I want to") >=0){
+				response = transformIWantToStatement(statement);
+				emotion--;
+			}
+			else if(findKeyword(statement, "I want") >=0){
+				response = transformIWantStatement(statement);
+				emotion--;
+			}
+			else{
+				response = getRandomResponse();
+				emotion--;
+			}
+		}
+
+		else if(rIndex == 4){
+			if (findKeyword(statement, "attack")>=0){
+				if(responses[1].equals("Lolipop")){
+					response = "I will support you from here! Go for it!" + "\n" + "You have slained the demon lord with Lolipop's invincibility! You saved the world!" +"\n"+ "BobBot: Do you want to return home?";
+					nextQuestion = true;
+				}
+				else{
+					response = "Go " + responses[1] + "! Use your Poop Monsters" + "\n" + "You defeated the demon lord with the Poop Monsters, because the demon lord hates poop. You saved the world!" + "\n" + "BobBot: Do you want to return home?";
+					nextQuestion = true;
+				}
+			}
+			else if (findKeyword(statement, "talk")>=0){
+				if(responses[1].equals("Lolipop")){
+					response = "..." + "\n" + "The demon lord ignored your talks, but waited until your invincibility wears off." + "\n" + "The demon lord slained you with dark magic!";
+					emotion = -100;
+				}
+				else{
+					response = "..." + "\n" + "The demon lord ignored your talks, but killed your Poop Monsters while your talking, from afar." + "\n" + "The demon lord slained you with dark magic!";
+					emotion = -100;
+				}
+			}
+			else{
+				response = "What? What did you just say?" + "\n" + "The demon lord made his moves first while you're having conversation with BobBot, and assasinated you from your shadows!";
+				emotion = -100;
+			}
+		}
+
+		else if(rIndex == 5){
+			if(findKeyword(statement,"yes")>=0){
+				response = "I will send you home then!" + "\n" + "BobBot send you home, but he became the next demon lord that rule this world for eternity!";
+			}
+			else{
+				response = "No? Ok I guess you have to die here and now, because I'm going to become the next demon lord, you're not going to be my trouble!" + "\n" + "You got slained by BobBot, and BobBot became the next demon lord that rule this world for eternity!";
+			}
+			emotion = -100;
 		}
 
 
@@ -230,7 +393,7 @@ public class FantasyBot
 			response = getRandomResponse();
 		}*/
 
-		return response;
+		return ("BobBot: "+ response);
 	}
 	
 	/**
@@ -252,7 +415,7 @@ public class FantasyBot
 		}
 		int psn = findKeyword (statement, "I want to", 0);
 		String restOfStatement = statement.substring(psn + 9).trim();
-		return "Why do you want to " + restOfStatement + "? Do you not want to save this world? We have no time to waste here, I beg you to make the decision now!";
+		return "Why do you want to " + restOfStatement + "? Do you not want to save this world? We have no time to waste here, I beg you to make a good decision now!";
 	}
 
 	
@@ -275,7 +438,7 @@ public class FantasyBot
 		}
 		int psn = findKeyword (statement, "I want", 0);
 		String restOfStatement = statement.substring(psn + 6).trim();
-		return "Would you really be happy if you had " + restOfStatement + "?";
+		return "I want " + restOfStatement + " too, but we can't get it unless we defeat the demon lord and save this world so lets keep on moving!";
 	}
 	
 	
@@ -399,6 +562,9 @@ public class FantasyBot
 		if (rIndex == 2){
 			return randomPathResponses[r.nextInt(randomPathResponses.length)];
 		}
+		if (rIndex == 3){
+			return randomDecisionResponses[r.nextInt(randomDecisionResponses.length)];
+		}
 		/*if (emotion == 0)
 		{	
 			return randomNeutralResponses [r.nextInt(randomNeutralResponses.length)];
@@ -422,7 +588,9 @@ public class FantasyBot
 			"That's not possible, let's just take the left route!",
 			"Halt your nonsense, just say that you want to go right!" };
 
-
+	private String[] randomDecisionResponses = {"Interesting decision, but I don't think we can do that at this moment.",
+			"That's not possible, stop daydreaming, we don't have time! Attack? Run? Negotiate? Just do something!",
+			"If you can't make the decision of what to do, I will make the decision of killing you, so you don't have to suffer!"};
 	/*private String [] randomNeutralResponses = {"Interesting, tell me more",
 			"Hmmm.",
 			"Do you really think so?",
