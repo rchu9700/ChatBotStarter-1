@@ -366,33 +366,6 @@ public class FantasyBot
 			emotion = -100;
 		}
 
-
-		/*else if (findKeyword(statement, "no") >= 0)
-		{
-			response = "Why so negative?";
-			//emotion--;
-		}
-		
-		else if (findKeyword(statement, "levin") >= 0)
-		{
-			response = "More like LevinTheDream amiright?";
-			//emotion++;
-		}
-
-		// Response transforming I want to statement
-		else if (findKeyword(statement, "I want to", 0) >= 0)
-		{
-			response = transformIWantToStatement(statement);
-		}
-		else if (findKeyword(statement, "I want",0) >= 0)
-		{
-			response = transformIWantStatement(statement);
-		}	
-		else
-		{
-			response = getRandomResponse();
-		}*/
-
 		return ("BobBot: "+ response);
 	}
 	
@@ -440,35 +413,7 @@ public class FantasyBot
 		String restOfStatement = statement.substring(psn + 6).trim();
 		return "I want " + restOfStatement + " too, but we can't get it unless we defeat the demon lord and save this world so lets keep on moving!";
 	}
-	
-	
-	/**
-	 * Take a statement with "I <something> you" and transform it into 
-	 * "Why do you <something> me?"
-	 * @param statement the user statement, assumed to contain "I" followed by "you"
-	 * @return the transformed statement
-	 */
-	private String transformIYouStatement(String statement)
-	{
-		//  Remove the final period, if there is one
-		statement = statement.trim();
-		String lastChar = statement.substring(statement
-				.length() - 1);
-		if (lastChar.equals("."))
-		{
-			statement = statement.substring(0, statement
-					.length() - 1);
-		}
-		
-		int psnOfI = findKeyword (statement, "I", 0);
-		int psnOfYou = findKeyword (statement, "you", psnOfI);
-		
-		String restOfStatement = statement.substring(psnOfI + 1, psnOfYou).trim();
-		return "Why do you " + restOfStatement + " me?";
-	}
-	
 
-	
 	
 	/**
 	 * Search for one word in phrase. The search is not case
@@ -565,16 +510,6 @@ public class FantasyBot
 		if (rIndex == 3){
 			return randomDecisionResponses[r.nextInt(randomDecisionResponses.length)];
 		}
-		/*if (emotion == 0)
-		{	
-			return randomNeutralResponses [r.nextInt(randomNeutralResponses.length)];
-		}
-		if (emotion < 0)
-		{	
-			return randomAngryResponses [r.nextInt(randomAngryResponses.length)];
-		}	
-		return randomHappyResponses [r.nextInt(randomHappyResponses.length)];
-		*/
 		return ("um Hello?");
 	}
 
@@ -591,17 +526,6 @@ public class FantasyBot
 	private String[] randomDecisionResponses = {"Interesting decision, but I don't think we can do that at this moment.",
 			"That's not possible, stop daydreaming, we don't have time! Attack? Run? Negotiate? Just do something!",
 			"If you can't make the decision of what to do, I will make the decision of killing you, so you don't have to suffer!"};
-	/*private String [] randomNeutralResponses = {"Interesting, tell me more",
-			"Hmmm.",
-			"Do you really think so?",
-			"You don't say.",
-			"It's all boolean to me.",
-			"So, would you like to go for a walk?",
-			"Could you say that again?"
-	};
-	private String [] randomAngryResponses = {"Bahumbug.", "Harumph", "The rage consumes me!"};
-	private String [] randomHappyResponses = {"H A P P Y, what's that spell?", "Today is a good day", "You make me feel like a brand new pair of shoes."};
-	*/
 
 }
 
