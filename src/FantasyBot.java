@@ -51,6 +51,7 @@ public class FantasyBot
 			if(nextQuestion){
 			rIndex++;
 			nextQuestion = false;
+			areYouSure=0;
 			}
 
 			//getResponse handles the user reply
@@ -86,7 +87,8 @@ public class FantasyBot
 	public String getResponse(String statement)
 	{
 		String response = "";
-		
+		Boolean isRandomResponse = false;
+
 		if (statement.length() == 0)
 		{
 			emotion--;
@@ -113,33 +115,92 @@ public class FantasyBot
 		}
 
 		else if (rIndex == 1){
-			String weapon = "noWeapon";
-			if(findKeyword(statement, "Sword") >=0){
-				response = "Is this Sword your weapon of choice?";
-				weapon = "Sword";
-			}
-			else if(findKeyword(statement, "Lolipop") >=0){
-				response = "A Lolipop, that's a unique one!";
-				weapon = "Lolipop";
-			}
-			else if(findKeyword(statement, "Poop On a Stick") >=0){
-				response = "A Poop on a Stick, you have good eyes";
-				weapon = "Poop on a Stick";
-			}
-			else if(findKeyword(statement, "Wand") >=0){
-				response = "This Wand will bring you magic";
-				weapon = "Wand";
-			}
-			else if(findKeyword(statement, "Gun") >=0){
-				response = "You better know how to aim with this Gun";
-				weapon = "Gun";
+			if (areYouSure == 0) {
+				String weapon = "noWeapon";
+				if (findKeyword(statement, "Sword") >= 0) {
+					response = "Is this Sword your weapon of choice?";
+					weapon = "Sword";
+				} else if (findKeyword(statement, "Lolipop") >= 0) {
+					response = "A Lolipop, that's a unique one!";
+					weapon = "Lolipop";
+				} else if (findKeyword(statement, "Poop On a Stick") >= 0) {
+					response = "A Poop on a Stick, you have good eyes";
+					weapon = "Poop on a Stick";
+				} else if (findKeyword(statement, "Wand") >= 0) {
+					response = "This Wand will bring you magic";
+					weapon = "Wand";
+				} else if (findKeyword(statement, "Gun") >= 0) {
+					response = "You better know how to aim with this Gun";
+					weapon = "Gun";
 
-			}
-			else{
-				response = getRandomResponse();
+				} else {
+					if(findKeyword(statement, "weapon") >= 0 || findKeyword(statement, "weapons") >= 0){
+						response = "There is a Sword, a Lolipop, a Poop on a Stick, a Wand, and a Gun";
+					}
+					else {
+						response = getRandomResponse();
+					}
+					isRandomResponse = true;
 
+				}
+				responses[1] = weapon;
+				if (isRandomResponse == false) {
+					response = response + "\n" + "Are you sure you want " + weapon + "? You won't have room for any other weapons!";
+				}
+				isRandomResponse = false;
 			}
-			responses[2] = weapon;
+			else if(areYouSure == 1){
+				response = "You have acquired the Legendary " + responses[1] + "! Now, out of the three paths in front of you, which path do you want to take?";
+				emotion = emotion +2;
+				nextQuestion = true;
+			}
+			else if(areYouSure == 2){
+				response = "Then pick your weapon already, there are only five choices, come on, pick!";
+				emotion--;
+				areYouSure=0;
+			}
+
+
+		}
+		else if(rIndex == 2){
+
+			if (areYouSure ==0){
+				String path = "no where";
+				if(findKeyword(statement, "middle") >= 0){
+					response = "I sense a huge goblin army coming toward us from the middle path, Shall we continue down this path?";
+					path = "middle";
+				}
+				else if(findKeyword(statement, "left") >= 0){
+					response = "The forest of mushrooms toward our left is giving off dark ominous winds. Do you really want to go from this route?";
+					path = "left";
+				}
+				else if(findKeyword(statement, "right") >= 0){
+					response = "The right path is covered in giant poops, from large creatures I suppose. I can fly over the poops, but you would have to swim across. Are you sure you want to be covered in poops?";
+					path = "right";
+				}
+				else if(findKeyword(statement, "I want to") >=0){
+					response = transformIWantToStatement(statement);
+				}
+				else{
+					if (findKeyword(statement, "path") >=0 || findKeyword(statement, "paths") >=0){
+						response = "There are only three paths, middle, left, or right.";
+					}
+					else {
+						response = getRandomResponse();
+					}
+				}
+				responses[2] = path;
+			}
+			else if (areYouSure ==1){
+				response = "Ok, looks like you have chosen the " + responses[2] + " path. Let's move on with caution!";
+				emotion = emotion +2;
+				nextQuestion = true;
+			}
+			else if (areYouSure ==2){
+				response = "Non-sense! Make your chose now or I will end you here myself!";
+				emotion= emotion - 2;
+				areYouSure=0;
+			}
 		}
 
 
@@ -191,7 +252,7 @@ public class FantasyBot
 		}
 		int psn = findKeyword (statement, "I want to", 0);
 		String restOfStatement = statement.substring(psn + 9).trim();
-		return "Why do you want to " + restOfStatement + "?";
+		return "Why do you want to " + restOfStatement + "? Do you not want to save this world? We have no time to waste here, I beg you to make the decision now!";
 	}
 
 	
@@ -335,6 +396,9 @@ public class FantasyBot
 		if (rIndex == 1){
 			return randomWeaponResponses[r.nextInt(randomWeaponResponses.length)];
 		}
+		if (rIndex == 2){
+			return randomPathResponses[r.nextInt(randomPathResponses.length)];
+		}
 		/*if (emotion == 0)
 		{	
 			return randomNeutralResponses [r.nextInt(randomNeutralResponses.length)];
@@ -345,7 +409,7 @@ public class FantasyBot
 		}	
 		return randomHappyResponses [r.nextInt(randomHappyResponses.length)];
 		*/
-		return randomWeaponResponses[r.nextInt(randomWeaponResponses.length)];
+		return ("um Hello?");
 	}
 
 	private String[] randomWeaponResponses = {"I don't see any of that here, how about a sword?",
@@ -353,6 +417,11 @@ public class FantasyBot
 			"Open your eyes, there are only a sword, a gun, a wand, a Lolipop, and a Poop on a Stick for you to choose from!",
 			"We don't have time for this, just get that Lolipop!"
 			};
+
+	private String[] randomPathResponses = {"Stop wasting time, we need to get to the demon lord as soon as possible! Why not just take the middle path",
+			"That's not possible, let's just take the left route!",
+			"Halt your nonsense, just say that you want to go right!" };
+
 
 	/*private String [] randomNeutralResponses = {"Interesting, tell me more",
 			"Hmmm.",
@@ -365,4 +434,6 @@ public class FantasyBot
 	private String [] randomAngryResponses = {"Bahumbug.", "Harumph", "The rage consumes me!"};
 	private String [] randomHappyResponses = {"H A P P Y, what's that spell?", "Today is a good day", "You make me feel like a brand new pair of shoes."};
 	*/
+
 }
+
