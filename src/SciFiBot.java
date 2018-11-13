@@ -10,26 +10,40 @@ import java.util.Scanner;
  */
 public class SciFiBot
 {
-	String[] positiveResponses = {"yes", " yeah ", "ok", "okay", "alright", "affirmative", "o.k.", "o.k", "fine"};
-	String[] negativeResponses = {"no", "nope", "no way", "not a chance", "nah", "i decline", "negative"};
-	//emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
-	// int emotion = 0;
+	// Initial variables and such
+	String [] requests =
+			{
+					"Can you get me a hypercube?",
+					"Can you find me a galactic space capsule?",
+					"Can you find me a hyperdrive?"
+			};
+	String [] goals =
+			{
+					"hypercube",
+					"galactic space capsule",
+					"hyperdrive"
+			};
+	int [] offers = {100, 150, 200, 300};
+	String[] positiveResponses = {"yes", " yeah ", "ok", "okay", "alright", "affirmative", "o.k.", "o.k", "fine", "sure"};
+	String[] negativeResponses = {"no", "nope", "no way", "not a chance", "nah", "i decline", "negative", "not"};
+	int rep = 0;
+	int debt = 0;
+	int money = 0;
+	boolean completed = false;
+	int quest = (int)(randomNumber(0, requests.length));
+	String name = "";
+	String goal = "";
+
 
 	/**
-	 * Runs the conversation for this particular chatbot, should allow switching to other chatbots.
-	 * @param statement the statement typed by the user
+	 * Runs the conversation for this particular chatbot. The switching has already been implemented in the main method.
 	 */
-	public void chatLoop(String statement)
+	public void chatLoop()
 	{
-		String name = "";
-		int luck = 0;
-		int debt = 0;
-		int money = 0;
-		int quest = (int)(randomNumber(0, requests.length));
 		Scanner in = new Scanner (System.in);
 		System.out.println (getGreeting());
 		System.out.println (askName());
-		statement = in.nextLine();
+		String statement = in.nextLine();
 		name = statement;
 		System.out.println("Nice to meet you " + name + "!");
 		System.out.println("It is the year 2100. A man walks up to you and says:");
@@ -38,29 +52,219 @@ public class SciFiBot
 		if (isPositive(statement))
 		{
 			System.out.println("Thanks!");
-			String goal = goals[quest];
-			luck++;
+			debt = offers[0];
 		}
-		if (isNegative(statement))
+		else if (isNegative(statement))
 		{
 			System.out.println(convince(1) + "!");
-			luck--;
 			statement = in.nextLine();
 			if (isPositive(statement))
 			{
 				System.out.println("Thanks!");
-				String goal = goals[quest];
+				debt = offers[1];
 			}
-			if (isNegative(statement))
+			else if (isNegative(statement))
 			{
 				System.out.println("What if " +convince(2) + "?");
 				statement = in.nextLine();
 				if (isPositive(statement))
 				{
 					System.out.println("Thanks!");
+					debt = offers[2];
+				}
+				else if (hasKeyword(statement,"I don't want to" ))
+				{
+					System.out.println(transformDontWantTo(statement));
+
+				}
+				else if (isNegative(statement))
+				{
+					System.out.println("Well you're quite mean!");
+				}
+				else
+				{
+					exit();
 				}
 			}
+			else
+			{
+				exit();
+			}
+		}
+		else
+		{
+			exit();
+		}
+		if(debt >0)
+		{
+			rep++;
+			goal = goals [quest];
+		}
+		System.out.println("So you get to a junction, and you can either go left or right. Which way do you want to go?");
+		statement = in.nextLine();
+		if (hasKeyword(statement, "right"))
+		{
+			System.out.println("All you see is a empty path that leads to nowhere");
+			System.out.println("Would you like to continue on?");
+			statement = in.nextLine();
+			if (isPositive(statement))
+			{
+				System.out.println("You keep going for miles and miles, untill you faint from dehydration.");
+				System.out.println("You wake up in 2007, and the story ends here.");
+				System.exit(0);
+			}
+			System.out.println("So you go back to the left way.");
+			left();
+		}
+		else if (hasKeyword(statement, "left"))
+		{
+			left();
+		}
+		else
+		{
+			exit();
+		}
+		if (completed)
+		{
+			System.out.println("So you go back and on your way, you see another man, and he asks:");
+			if (!goal.equals(""))
+			{
+				System.out.println("Ay you! You got a " + goal + " that you're willing to sell?");
+				while(true)
+				{
+					statement = in.nextLine();
+					if (isPositive(statement))
+					{
+						System.out.println("Oh goodness me, he appears to have stolen it from you! How unfortunate!");
+						rep --;
+						debt = 0;
+						break;
+					}
+					else if (isNegative(statement))
+					{
+						System.out.println("The man says:");
+						System.out.println("Ok, I'll be on my way then!");
+						rep ++;
+						break;
+					}
+						else System.out.println("I don't understand");
+				}
+			}
+			else
+			{
+				System.out.println("Would you like to help me with my homework?");
+				statement =in.nextLine();
+				if (isPositive(statement))
+				{
+					System.out.println("Ok, its just one math question.");
+					System.out.println("What is 2 times 2?");
+					statement = in.nextLine();
+					if (hasKeyword(statement, "4"))
+					{
+						rep ++;
+						debt = debt +10;
+						System.out.println("Wow, thanks! Here is 10 dollars for your trouble!");
+					}
+					else
+					{
+						System.out.println("Really?");
+						rep--;
+					}
+				}
+				else if (isNegative(statement))
+				{
+					System.out.println("You are very very mean!");
+					rep--;
+				}
+			}
+		}
 
+
+		System.out.println("So you go back to original man and he asks you:");
+		if (goal.equals(""))
+		{
+			System.out.println("Why didn't you help me?");
+			statement = in.nextLine();
+			if (hasKeyword(statement,"could"))
+			{
+				System.out.println("It's Okay, I understand.");
+				rep++;
+			}
+			else
+			{
+				System.out.println("That's no excuse!");
+				rep--;
+			}
+		}
+		else
+		{
+			System.out.println("So do you have the " +goal +" that I asked for?");
+			statement = in.nextLine();
+			if (debt == 0)
+			{
+				if (isPositive(statement))
+				{
+					System.out.println("The man, frustrated by your lies banished you to 2007, and the story ends there.");
+					System.exit(0);
+				}
+				if (isNegative(statement))
+				{
+					System.out.println("Well at least you're honest about it.");
+					rep++;
+				}
+				else
+				{
+					System.out.println("I don't understand, so i'll assume that you tried");
+					rep++;
+				}
+			}
+			else
+			{
+				System.out.println("Thank you so much!");
+			}
+		}
+		System.out.println("The story concludes here.");
+		System.out.println("rep" + rep);
+		System.out.println("debt" + debt);
+		System.out.println("Congratulations! Your final score is "+ (debt+rep) +"! Try again next time!");
+	}
+
+	/**
+	 *  The sequence of events that take place if you choose the left path.
+	 */
+	private void left()
+	{
+		String statement;
+		Scanner in = new Scanner (System.in);
+		System.out.println("Oh no! You've stumbled into a maze, and a very dangerous one at that!");
+		System.out.println("Would you like to go back?");
+		statement= in.nextLine();
+		if (isNegative(statement))
+		{
+			System.out.println("Ok on we go!");
+		}
+		else
+		{
+			System.out.println("Well it's too bad the bridge back just broke!");
+			System.out.println("So I guess we have to continue on!");
+		}
+		if (maze())
+		{
+			if (!goal.equals(""))
+			{
+				System.out.println("Wow you found a "+ goal +"! Nice going " + name +"!");
+				completed = true;
+			}
+			else
+			{
+				System.out.println("You found nothing, how unfortunate!");
+				completed = true;
+			}
+		}
+		else
+		{
+			System.out.println("Unfortunately you fall down a hole and get time traveled back to 2007, and this story ends there!");
+			System.exit(0);
 		}
 	}
 	/**
@@ -75,65 +279,67 @@ public class SciFiBot
 	{
 		return "What is your name?";
 	}
-	
 
+
+
+	private void exit()
+	{
+		System.out.println("I cannot understand your last comment, and so I must be on my way.");
+		debt = 0;
+		rep = 0;
+		System.exit(0);
+	}
 
 	/**
-	 * Take a statement with "I want to <something>." and transform it into 
-	 * "Why do you want to <something>?"
-	 * @param statement the user statement, assumed to contain "I want to"
+	 * Take a statement with "I dont want to <something>." and transform it into
+	 * "Why don't you want to <something>?"
+	 * @param statement the user statement, assumed to contain "I don't want to"
 	 * @return the transformed statement
 	 */
-	private String transformIWantToStatement(String statement)
+	private String transformDontWantTo(String statement)
 	{
 		//  Remove the final period, if there is one
 		statement = statement.trim();
-		String lastChar = statement.substring(statement
-				.length() - 1);
+		String lastChar = statement.substring(statement.length() - 1);
 		if (lastChar.equals("."))
 		{
 			statement = statement.substring(0, statement
 					.length() - 1);
 		}
-		int psn = findKeyword (statement, "I want to", 0);
-		String restOfStatement = statement.substring(psn + 9).trim();
-		return "Why do you want to " + restOfStatement + "?";
+		int psn = findKeyword (statement, "I don't want to", 0);
+		String restOfStatement = statement.substring(psn + 15).trim();
+		return "Why don't you want to " + restOfStatement + "?";
 	}
 
+	/**
+	 * Gives the user a maze to solve.
+	 * @return if the user completed the maze successfully.
+	 */
+	private boolean maze()
+	{
+		Scanner in = new Scanner (System.in);
+		String path[] = {"left", "right"};
+		for(int i = 0; i < path.length; i++) {
+			System.out.println("Which way do you go? (right or left): ");
+			String input = in.nextLine();
+			if (!input.equals(path[i])) {
+				System.out.println("You got lost!");
+				return false;
+			}
+		}
+		System.out.println("You made it!");
+		return true;
+	}
 	private String convince (int i)
 	{
-		String [] offers = {"100", "150", "200", "300"};
 		return "I'll give you " + offers [i] + " credits";
 	}
-	
+
+
 	/**
-	 * Take a statement with "I want <something>." and transform it into 
-	 * "Would you really be happy if you had <something>?"
-	 * @param statement the user statement, assumed to contain "I want"
-	 * @return the transformed statement
-	 */
-	private String transformIWantStatement(String statement)
-	{
-		//  Remove the final period, if there is one
-		statement = statement.trim();
-		String lastChar = statement.substring(statement
-				.length() - 1);
-		if (lastChar.equals("."))
-		{
-			statement = statement.substring(0, statement
-					.length() - 1);
-		}
-		int psn = findKeyword (statement, "I want", 0);
-		String restOfStatement = statement.substring(psn + 6).trim();
-		return "Would you really be happy if you had " + restOfStatement + "?";
-	}
-	
-	
-	/**
-	 * Take a statement with "I <something> you" and transform it into 
-	 * "Why do you <something> me?"
-	 * @param statement the user statement, assumed to contain "I" followed by "you"
-	 * @return the transformed statement
+	 * Uses findKeyword to find if a statment is positive. It references the string array positiveResponses.
+	 * @param statement The statement to be checked
+	 * @return a boolean indicating if the statement is a positive statement.
 	 */
 	private boolean isPositive(String statement)
 	{
@@ -145,6 +351,11 @@ public class SciFiBot
 		}
 		return false;
 	}
+	/**
+	 * Uses findKeyword to find if a statment is negative. It references the string array negativeResponses.
+	 * @param statement The statement to be checked
+	 * @return a boolean indicating if the statement is a negative statement.
+	 */
 	private boolean isNegative(String statement)
 	{
 		for (int i = 0; i < negativeResponses.length; i++) {
@@ -156,7 +367,23 @@ public class SciFiBot
 		return false;
 	}
 
-	
+	/**
+	 * Uses find keyword to check if a String statement contains String goal.
+	 * @param statement The string to search
+	 * @param goal The string to search for
+	 * @return
+	 */
+
+	private boolean hasKeyword (String statement, String goal)
+	{
+		statement = statement.toLowerCase();
+		goal = goal.toLowerCase();
+		if (findKeyword(statement, goal) != -1)
+		{
+			return true;
+		}
+		return false;
+	}
 	/**
 	 * Search for one word in phrase. The search is not case
 	 * sensitive. This method will check that the given goal
@@ -232,23 +459,19 @@ public class SciFiBot
 	{
 		return findKeyword (statement, goal, 0);
 	}
+
+	/**
+	 * Makes a random number between the two parameters.
+	 * @param lowerlim The bottom limit
+	 * @param upperlim The top limit
+	 * @return The random number between.
+	 */
 	private int randomNumber(int lowerlim, int upperlim)
 	{
 		return (int)(Math.random()*(upperlim-lowerlim)+lowerlim);
 	}
 	
-	private String [] requests =
-			{
-					"Can you get me a hypercube?",
-					"Can you find me an intergalactic space capsule?",
-					"Can you find me a hyperdrive?"
-			};
-	private String [] goals =
-			{
-					"hypercube",
-					"intergalactic space capsule?",
-					"hyperdrive"
-			};
+
 
 
 

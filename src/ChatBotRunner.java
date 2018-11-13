@@ -80,7 +80,7 @@ public class ChatBotRunner {
 		String statement = "";
 		if (bot == "scifi")
 		{
-				scifiBot.chatLoop(statement);
+				scifiBot.chatLoop();
 		}
 		if (bot == "mystery")
 		{
