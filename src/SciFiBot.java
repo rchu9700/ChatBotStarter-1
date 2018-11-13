@@ -6,7 +6,7 @@ import java.util.Scanner;
  * A program to carry on conversations with a human user.
  * This version:
  * @author Loris Jautakas
- * @version September 2018
+ * @version November 2018
  */
 public class SciFiBot
 {

@@ -4,7 +4,7 @@ import java.util.Scanner;
 /**
  * A simple class to run our chatbot teams.
  * @author Ricky Chu, Wei Chen, Loris Jautakas
- * @version September 2018
+ * @version November 2018
  */
 public class ChatBotRunner {
 	/**
@@ -12,7 +12,7 @@ public class ChatBotRunner {
 	 */
 	public static void main(String[] args)
 	{
-		String[] positiveResponses = {"yes", " yeah ", "ok", "okay", "alright", "affirmative", "o.k.", "o.k"};
+		String[] positiveResponses = {"yes", " yeah ", "ok", "okay", "alright", "affirmative", "o.k.", "o.k", "sure", "yea"};
 		String[] negativeResponses = {"no", "nope", "no way", "not a chance", "nah", "i decline", "negative"};
 
         Scanner in = new Scanner (System.in);
